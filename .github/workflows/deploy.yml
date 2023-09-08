@@ -25,9 +25,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
       - run: npm ci
       - run: npm run build
+      - run: git config --global init.defaultBranch main
       - name: Push to GitHub Pages branch
         uses: ftnext/action-push-ghpages@v1.0.0
         with:
