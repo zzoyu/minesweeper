@@ -9,22 +9,7 @@ const game = useGameStore()
 
 <template>
   <header>
-    <img
-      v-if="game.gameState === GameState.ready || game.gameState === GameState.playing"
-      alt="logo"
-      class="logo"
-      src="@/assets/normal.png"
-      width="150"
-    />
-    <img
-      v-else-if="game.gameState === GameState.won"
-      alt="logo"
-      class="logo"
-      src="@/assets/won.png"
-      width="150"
-    />
-    <img v-else alt="logo" class="logo" src="@/assets/lost.png" width="150" />
-
+    <div :class="GameState[game.gameState].toString()" alt="logo" class="logo" />
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
@@ -45,6 +30,20 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+  background-image: url(@/assets/sprite.png);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: auto 173px;
+  width: 150px;
+  height: 173px;
+  background-color: transparent;
+}
+
+.logo.lost {
+  background-position: -150px 0;
+}
+.logo.won {
+  background-position: -300px 0;
 }
 
 nav {
