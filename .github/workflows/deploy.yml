@@ -28,11 +28,13 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
-      - run: git config --global init.defaultBranch main
-      - name: Push to GitHub Pages branch
-        uses: ftnext/action-push-ghpages@v1.0.0
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          # Path to the directory where the static assets are located.
-          build_dir: dist
-          # Specify GITHUB_TOKEN in your repository.
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Upload entire repository
+          path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
