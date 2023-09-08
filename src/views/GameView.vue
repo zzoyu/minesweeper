@@ -2,11 +2,13 @@
 import MineBase from '@/components/MineBase.vue'
 import { useGameStore } from '@/stores/game'
 import { Difficulty } from '@/types/'
-
-console.log(Difficulty.easy)
+import { useRoute } from 'vue-router'
 
 const game = useGameStore()
-game.newGame(Difficulty.easy)
+
+const difficulty = Difficulty?.[(useRoute().query?.level as keyof typeof Difficulty) ?? 'easy']
+if (!difficulty) throw new Error('Invalid difficulty')
+game.newGame(difficulty)
 </script>
 
 <template>

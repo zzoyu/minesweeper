@@ -1,11 +1,29 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { GameState } from './types'
+import { useGameStore } from './stores/game'
+
+const game = useGameStore()
 </script>
 
 <template>
   <header>
-    <img alt="logo" class="logo" src="@/assets/minesweeper.png" width="150" />
+    <img
+      v-if="game.gameState === GameState.ready || game.gameState === GameState.playing"
+      alt="logo"
+      class="logo"
+      src="@/assets/normal.png"
+      width="150"
+    />
+    <img
+      v-else-if="game.gameState === GameState.won"
+      alt="logo"
+      class="logo"
+      src="@/assets/won.png"
+      width="150"
+    />
+    <img v-else alt="logo" class="logo" src="@/assets/lost.png" width="150" />
 
     <div class="wrapper">
       <nav>

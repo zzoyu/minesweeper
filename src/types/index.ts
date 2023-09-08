@@ -1,16 +1,25 @@
 export enum State {
   hidden,
+  flagged,
+  question,
   revealed,
-  flagged
+  exploded
 }
 
-export type Cell = {
+export interface Cell {
   state: State
   isMine: boolean
-  around: number
+  neighbor: number
 }
 
-export type MapInformation = {
+export enum GameState {
+  ready,
+  playing,
+  won,
+  lost
+}
+
+export type FieldInformation = {
   width: number
   height: number
   mines: number
