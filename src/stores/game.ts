@@ -75,20 +75,43 @@ export const useGameStore = defineStore('game', () => {
     if (field.value[y][x].isMine) {
       field.value[y][x].state = State.exploded
       gameState.value = GameState.lost
-      for (let y = 0; y < fieldInformation.value.height; y++) {
-        for (let x = 0; x < fieldInformation.value.width; x++) {
-          if (field.value[y][x].state === State.hidden) field.value[y][x].state = State.revealed
-        }
-      }
+      revealAll()
       return
     }
 
     if (field.value[y][x].neighbor > 0) {
       field.value[y][x].state = State.revealed
-      return
+    } else {
+      spreadCell(field.value, [{ x, y }], [])
     }
 
-    spreadCell(field.value, [{ x, y }], [])
+    if (isClear()) {
+      gameState.value = GameState.won
+      revealAll()
+    }
+  }
+
+  const revealAll = () => {
+    for (let y = 0; y < fieldInformation.value.height; y++) {
+      for (let x = 0; x < fieldInformation.value.width; x++) {
+        field.value[y][x].state = State.revealed
+      }
+    }
+  }
+
+  const isClear = () => {
+    let count = 0
+    for (let y = 0; y < fieldInformation.value.height; y++) {
+      for (let x = 0; x < fieldInformation.value.width; x++) {
+        if (field.value[y][x].state !== State.revealed && !field.value[y][x].isMine) {
+          count++
+        }
+      }
+    }
+    if (count) {
+      return false
+    }
+    return true
   }
 
   const isValidCell = (field: Cell[][], x: number, y: number) => {
@@ -139,5 +162,9 @@ export const useGameStore = defineStore('game', () => {
     placeMines(field.value, _fieldInformation.mines)
   }
 
-  return { field, newGame, revealCell, gameState }
+  const retry = () => {
+    newGame(fieldInformation.value)
+  }
+
+  return { field, newGame, revealCell, retry, gameState }
 })

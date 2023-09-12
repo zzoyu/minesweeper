@@ -25,7 +25,7 @@ class Confetti {
 
     this.vector = {
       x: Math.random() * 2 + 1,
-      y: Math.random()
+      y: Math.random() - 0.5
     }
 
     if (direction === 'left') {
@@ -61,6 +61,8 @@ const render = () => {
     particle.y += particle.vector.y + Math.max(particle.y * 0.01, 0.5)
     particle.x += particle.vector.x
 
+    particle.vector.y += Math.max(particle.y * 0.0001, 0.001)
+
     particle.degree += particle.direction === 'left' ? -1 : 1
   }
 
@@ -78,6 +80,11 @@ onMounted(() => {
   canvas.value!.height = window.innerHeight
 
   render()
+
+  window.addEventListener('resize', () => {
+    canvas.value!.width = window.innerWidth
+    canvas.value!.height = window.innerHeight
+  })
 })
 </script>
 

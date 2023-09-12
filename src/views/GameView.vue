@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import MineBase from '@/components/MineBase.vue'
+import TheResult from '@/components/TheResult.vue'
 import { useGameStore } from '@/stores/game'
-import { Difficulty } from '@/types/'
+import { Difficulty, GameState } from '@/types/'
 import { useRoute } from 'vue-router'
 
 const game = useGameStore()
@@ -13,7 +14,10 @@ game.newGame(difficulty)
 
 <template>
   <main>
+    <TheResult v-if="game.gameState === GameState.lost" message="패배..." />
+    <TheResult v-else-if="game.gameState === GameState.won" message="승리!" />
     <MineBase v-model="game.field" />
   </main>
 </template>
-@/types/type
+
+<style scoped></style>

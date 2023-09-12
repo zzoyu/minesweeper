@@ -10,7 +10,8 @@ const game = useGameStore()
 
 <template>
   <header>
-    <Confetti :texts="['🌕']" />
+    <Confetti v-if="game.gameState === GameState.lost" :texts="['💣', '💣', '💣', '💥']" />
+    <Confetti v-else-if="game.gameState === GameState.won" :texts="['🌼', '🎉', '🎊', '🎈']" />
     <div :class="GameState[game.gameState].toString()" alt="logo" class="logo" />
     <div class="wrapper">
       <nav>
