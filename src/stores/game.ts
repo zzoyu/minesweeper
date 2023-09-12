@@ -170,11 +170,7 @@ export const useGameStore = defineStore('game', () => {
 
   const flaggedCount = computed(() => {
     return field.value.reduce((count, row) => {
-      return (
-        row.filter((cell) => {
-          cell.state === State.flagged
-        }).length + count
-      )
+      return row.filter((cell) => cell.state === State.flagged).length + count
     }, 0)
   })
 
