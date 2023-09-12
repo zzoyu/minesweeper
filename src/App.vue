@@ -3,12 +3,14 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import { GameState } from './types'
 import { useGameStore } from './stores/game'
+import Confetti from './components/TheConfetti.vue'
 
 const game = useGameStore()
 </script>
 
 <template>
   <header>
+    <Confetti :texts="['🌕']" />
     <div :class="GameState[game.gameState].toString()" alt="logo" class="logo" />
     <div class="wrapper">
       <nav>
