@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { State, type Cell } from '@/types'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps<{
   value: Cell
@@ -29,12 +29,37 @@ const innerText = computed(() => {
       return ''
   }
 })
+
+const isTouchedWhen = ref<Date>()
+
+const startTouch = (e: TouchEvent) => {
+  if (!isTouchedWhen.value) {
+    isTouchedWhen.value = new Date()
+    return
+  }
+}
+
+const endTouch = (e: TouchEvent) => {
+  if (isTouchedWhen.value) {
+    const now = new Date()
+    const diff = now.getTime() - isTouchedWhen.value.getTime()
+    if (diff < 500) {
+      emit('click')
+    } else {
+      emit('rightClick')
+      navigator.vibrate?.(200)
+    }
+    isTouchedWhen.value = undefined
+  }
+}
 </script>
 
 <template>
   <button
     @click="emit('click')"
     @contextmenu.prevent="emit('rightClick')"
+    @touchstart.prevent="startTouch"
+    @touchend.prevent="endTouch"
     :class="State[value.state].toString()"
   >
     {{ innerText }}
@@ -52,6 +77,8 @@ button {
   outline: none;
   backface-visibility: hidden;
   transform-style: preserve-3d;
+  text-align: center;
+  padding: 0;
 }
 
 .revealed,

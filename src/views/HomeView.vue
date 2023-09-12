@@ -19,6 +19,12 @@ div {
   gap: 10px;
 }
 
+@media screen and (max-width: 768px) {
+  div {
+    flex-direction: column;
+  }
+}
+
 a {
   height: 100px;
   width: 200px;
