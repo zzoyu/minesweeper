@@ -94,7 +94,9 @@ export const useGameStore = defineStore('game', () => {
   const revealAll = () => {
     for (let y = 0; y < fieldInformation.value.height; y++) {
       for (let x = 0; x < fieldInformation.value.width; x++) {
-        field.value[y][x].state = State.revealed
+        if (field.value[y][x].state === State.flagged) {
+          if (!field.value[y][x].isMine) field.value[y][x].state = State.flaggedWrong
+        } else field.value[y][x].state = State.revealed
       }
     }
   }

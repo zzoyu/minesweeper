@@ -3,7 +3,8 @@ export enum State {
   flagged,
   question,
   revealed,
-  exploded
+  exploded,
+  flaggedWrong
 }
 
 export interface Cell {

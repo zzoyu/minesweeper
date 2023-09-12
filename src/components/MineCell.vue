@@ -25,6 +25,8 @@ const innerText = computed(() => {
       if (props.value.isMine) return '💣'
       else if (props.value.neighbor === 0) return ''
       else return props.value.neighbor.toString()
+    case props.value.state === State.flaggedWrong:
+      return '❌'
     default:
       return ''
   }
@@ -82,7 +84,8 @@ button {
 }
 
 .revealed,
-.exploded {
+.exploded,
+.flaggedWrong {
   background-color: #ccc;
   animation: reveal 0.3s;
   position: relative;
