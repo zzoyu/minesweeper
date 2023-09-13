@@ -49,6 +49,7 @@ export const useGameStore = defineStore('game', () => {
 
     for (let y = 0; y < fieldInformation.value.height; y++) {
       for (let x = 0; x < fieldInformation.value.width; x++) {
+        if (field[y][x].isMine) continue
         field[y][x].neighbor = countNeighbor(field, x, y)
       }
     }
@@ -174,5 +175,14 @@ export const useGameStore = defineStore('game', () => {
     }, 0)
   })
 
-  return { field, newGame, revealCell, retry, gameState, fieldInformation, flaggedCount }
+  return {
+    field,
+    newGame,
+    revealCell,
+    retry,
+    gameState,
+    fieldInformation,
+    flaggedCount,
+    countNeighbor
+  }
 })
