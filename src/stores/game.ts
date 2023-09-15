@@ -183,6 +183,7 @@ export const useGameStore = defineStore('game', () => {
     gameState,
     fieldInformation,
     flaggedCount,
-    countNeighbor
+    countNeighbor,
+    makeField
   }
 })
